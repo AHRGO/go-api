@@ -54,3 +54,27 @@ services:
 volumes:
   pgdata: {}
 ```
+
+## go run: package command-line-arugments is not a main package
+Quando eu tentei rodar `go run main.go` apareceu esse erro aí.
+
+O erro acontece porque no meu package, eu deixei da seguinte forma: `package cmd` (porque o meu main.go está na pasta cmd)
+
+O Go até consegue rodar o cli, mas quando ele foi pro arquivo do `main.go`, ele procurou um pacote executável, mas não encontrou nenhum.
+
+Isso acontece porque o Go faz duas distinções importantes de packages:
+1. O package `main`, que indica que aquele package pode ser executado.
+2. Demais packages (`api`, `handlers`, `models`, etcd), que indicam códigos que serão reutilizados por outros pacotes.
+
+Então, em suma, para que o Go seja executado, ele precisa de um arquivo que contenha a notação `package main`, indicando que esse é o package executável, e que dentro desse arquivo exista a `func main()`.
+
+# Criação passo a passo
+- go mod init
+- cria o main.go
+- baixar o package do gin `github.com/gin-gonic/gin`
+- criar a rota de ping
+- definir endereço da api
+- rodar a api
+- criar o docker-compose-yml
+- subir o container
+- fazer a conexão do sgbd com o container
