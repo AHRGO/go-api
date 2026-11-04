@@ -34,3 +34,23 @@ Então eu pensei que, já que o próprio VS Code estava fazendo redirecionamento
 Logo, eu mudei a porta de fowarding no meu docker compose para a 5500, mas ainda apontando internamente, no meu container, para a porta 5432, que é a padrão do Postgres.
 
 Então, ao se conectar usando a porta 5500, para a minha enorme surpresa, deu certo!
+
+Para uma futura referência, here it is the docker compose code:
+
+```yaml
+services:
+  go_db:
+    container_name: go_db
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5500:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    
+volumes:
+  pgdata: {}
+```
