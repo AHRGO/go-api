@@ -1,4 +1,4 @@
-# go-api-sample-project
+# go-api project
 a simple api project using go
 
 ## Passo a passo pra rodar as coisas:
